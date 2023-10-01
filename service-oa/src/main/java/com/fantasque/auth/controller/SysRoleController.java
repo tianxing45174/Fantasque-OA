@@ -73,11 +73,23 @@ public class SysRoleController {
     }
 
     /**
+     * 根据角色id删除角色
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "根据id删除角色")
+    @DeleteMapping("remove/{id}")
+    public Result remove(@PathVariable Long id) {
+        sysRoleService.removeById(id);
+        return Result.ok();
+    }
+
+    /**
      * 根据角色ID列表删除角色
      * @param idList
      * @return
      */
-    @ApiOperation(value = "根据角色id列表删除角色")
+    @ApiOperation(value = "根据id列表删除角色")
     @DeleteMapping("/batchRemove")
     public Result batchRemove(@RequestBody List<Long> idList) {
         sysRoleService.removeByIds(idList);
