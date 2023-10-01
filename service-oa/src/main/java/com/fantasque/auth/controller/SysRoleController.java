@@ -8,10 +8,7 @@ import com.fantasque.vo.system.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -73,5 +70,17 @@ public class SysRoleController {
             return Result.ok();
         }
         return Result.fail();
+    }
+
+    /**
+     * 根据角色ID列表删除角色
+     * @param idList
+     * @return
+     */
+    @ApiOperation(value = "根据角色id列表删除角色")
+    @DeleteMapping("/batchRemove")
+    public Result batchRemove(@RequestBody List<Long> idList) {
+        sysRoleService.removeByIds(idList);
+        return Result.ok();
     }
 }
