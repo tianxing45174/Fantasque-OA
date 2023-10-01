@@ -1,7 +1,9 @@
 package com.fantasque.auth.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fantasque.model.system.SysRole;
+import com.fantasque.vo.system.SysRoleQueryVo;
 
 /**
 * @author LaFantasque
@@ -10,5 +12,7 @@ import com.fantasque.model.system.SysRole;
 */
 
 public interface SysRoleService extends IService<SysRole> {
+
+    public IPage pageQueryRole(Long page, Long limit, SysRoleQueryVo sysRoleQueryVo);
 
 }
