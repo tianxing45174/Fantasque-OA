@@ -8,8 +8,10 @@ import com.fantasque.vo.system.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -48,13 +50,18 @@ public class SysRoleController {
     public Result pageQuerySysRole(@PathVariable("page") Long page,
                                 @PathVariable("limit") Long limit,
                                 SysRoleQueryVo sysRoleQueryVo){
-        System.out.println("分页查询");
-        String roleName = sysRoleQueryVo.getRoleName();
-        if (!StringUtils.isEmpty(roleName)) {
-            System.out.println("查询条件是：" + roleName);
-        }
         IPage pageQueryRole = sysRoleService.pageQueryRole(page, limit, sysRoleQueryVo);
         return Result.ok(pageQueryRole);
+    }
+
+    @ApiOperation(value = "添加角色")
+    @PostMapping("/save")
+    public Result save(@RequestBody SysRole role) {
+        boolean is_success = sysRoleService.save(role);
+        if (is_success) {
+            return Result.ok();
+        }
+        return Result.fail();
     }
 
     @ApiOperation(value = "修改角色")
