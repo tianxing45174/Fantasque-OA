@@ -62,7 +62,7 @@ public class SysRoleController {
     }
 
     @ApiOperation(value = "修改角色")
-    @PostMapping("/update")
+    @PutMapping("/update")
     public Result updateById(@RequestBody SysRole role) {
         System.out.println("修改角色：" + role.getRoleName());
         boolean is_seccess = sysRoleService.updateById(role);
