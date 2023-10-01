@@ -8,10 +8,7 @@ import com.fantasque.vo.system.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -54,6 +51,11 @@ public class SysRoleController {
         return Result.ok(pageQueryRole);
     }
 
+    /**
+     * 添加角色
+     * @param role
+     * @return
+     */
     @ApiOperation(value = "添加角色")
     @PostMapping("/save")
     public Result save(@RequestBody SysRole role) {
@@ -64,6 +66,11 @@ public class SysRoleController {
         return Result.fail();
     }
 
+    /**
+     * 根据角色ID修改角色
+     * @param role
+     * @return
+     */
     @ApiOperation(value = "修改角色")
     @PostMapping("/update")
     public Result updateById(@RequestBody SysRole role) {
@@ -74,4 +81,17 @@ public class SysRoleController {
         }
         return Result.fail();
     }
+
+    /**
+     * 根据角色ID查询角色
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "根据id查询角色")
+    @GetMapping("/get/{id}")
+    public Result queryById(@PathVariable("id") Long id) {
+        SysRole sysRole = sysRoleService.getById(id);
+        return Result.ok(sysRole);
+    }
+
 }
