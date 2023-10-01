@@ -1,15 +1,15 @@
 package com.fantasque.auth;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author LaFantasque
  * @version 1.0
  */
 @SpringBootApplication
-@MapperScan("com.fantasque.auth.mapper")
+@ComponentScan("com.fantasque") // 指定扫描包
 public class ServiceAuthApplication {
     public static void main(String[] args) {
         SpringApplication.run(ServiceAuthApplication.class, args);
