@@ -16,7 +16,7 @@
             <option name="ignoreTablePrefix" value="" />
             <option name="ignoreTableSuffix" value="" />
             <option name="moduleName" value="service-oa" />
-            <option name="modulePath" value="$PROJECT_DIR$/service-oa" />
+            <option name="modulePath" value="$PROJECT_DIR$" />
             <option name="moduleUIInfoList">
               <list>
                 <ModuleInfoGo>
@@ -26,7 +26,7 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Mapper" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.java" />
-                  <option name="modulePath" value="$PROJECT_DIR$/service-oa" />
+                  <option name="modulePath" value="$PROJECT_DIR$" />
                   <option name="packageName" value="${domain.basePackage}.mapper" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
@@ -36,7 +36,7 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Mapper" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.xml" />
-                  <option name="modulePath" value="$PROJECT_DIR$/service-oa" />
+                  <option name="modulePath" value="$PROJECT_DIR$" />
                   <option name="packageName" value="mapper" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
@@ -46,7 +46,7 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}ServiceImpl" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}ServiceImpl.java" />
-                  <option name="modulePath" value="$PROJECT_DIR$/service-oa" />
+                  <option name="modulePath" value="$PROJECT_DIR$" />
                   <option name="packageName" value="${domain.basePackage}.service.impl" />
                 </ModuleInfoGo>
                 <ModuleInfoGo>
@@ -56,7 +56,7 @@
                   <option name="encoding" value="${domain.encoding}" />
                   <option name="fileName" value="${domain.fileName}Service" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Service.java" />
-                  <option name="modulePath" value="$PROJECT_DIR$/service-oa" />
+                  <option name="modulePath" value="$PROJECT_DIR$" />
                   <option name="packageName" value="${domain.basePackage}.service" />
                 </ModuleInfoGo>
               </list>
@@ -69,12 +69,14 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="SysDept" />
-                  <option name="tableName" value="sys_dept" />
+                  <option name="className" value="OaProcess" />
+                  <option name="tableName" value="oa_process" />
                 </TableUIInfo>
               </list>
             </option>
             <option name="templatesName" value="mybatis-plus3" />
+            <option name="useActualColumnAnnotationInject" value="true" />
+            <option name="useActualColumns" value="true" />
             <option name="useLombokPlugin" value="true" />
           </GenerateConfig>
         </option>
