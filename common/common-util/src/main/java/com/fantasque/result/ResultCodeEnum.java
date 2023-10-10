@@ -14,9 +14,10 @@ public enum ResultCodeEnum {
     SUCCESS(10200,"成功"),//通用成功
     FAIL(10001,"系统未知异常"),//通用失败 系统未知异常
     DATA_ERROR(10004, "数据异常"),
+    SERVICE_ERROR(10012, "服务异常"),
     LOGIN_AUTH(20008, "未登陆"),//用户未登录
     PERMISSION(20009, "没有权限"),//用户没有权限
-    SERVICE_ERROR(10012, "服务异常")
+    PHONE_ERROR(20010, "电话号码格式错误")
     ;
 
     private Integer code;

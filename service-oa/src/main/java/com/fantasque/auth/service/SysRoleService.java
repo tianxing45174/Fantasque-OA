@@ -3,7 +3,10 @@ package com.fantasque.auth.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fantasque.model.system.SysRole;
+import com.fantasque.vo.system.AssginRoleVo;
 import com.fantasque.vo.system.SysRoleQueryVo;
+
+import java.util.Map;
 
 /**
 * @author LaFantasque
@@ -15,4 +18,7 @@ public interface SysRoleService extends IService<SysRole> {
 
     public IPage pageQueryRole(Long page, Long limit, SysRoleQueryVo sysRoleQueryVo);
 
+    Map<String, Object> findRoleByUserId(Long userId);
+
+    void doAssign(AssginRoleVo assginRoleVo);
 }
