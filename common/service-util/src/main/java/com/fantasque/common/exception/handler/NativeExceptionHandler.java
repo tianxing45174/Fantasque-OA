@@ -14,11 +14,11 @@ public class NativeExceptionHandler {
     @ExceptionHandler(Exception.class) // 捕获全局异常
     public Result error(Exception e){
         e.printStackTrace();
-        return Result.fail().message("GlobalException异常处理");
+        return Result.fail();
     }
     @ExceptionHandler(ArithmeticException.class)
     public Result error(ArithmeticException e){
         e.printStackTrace();
-        return Result.fail().message("ArithmeticException异常处理");
+        return Result.fail().message("算数异常");
     }
 }

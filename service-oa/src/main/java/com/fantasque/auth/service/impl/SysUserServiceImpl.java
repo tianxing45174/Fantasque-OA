@@ -61,14 +61,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
 
     @Transactional
     @Override
-    public void updateStatus(Long id, Integer status) {
+    public void updateStatus(Long id, Integer newStatus) {
         SysUser sysUser = this.getById(id);
-        if(status.intValue() == 1) {
-            sysUser.setStatus(status);
-        } else {
-            sysUser.setStatus(0);
+        Integer oldStatus = sysUser.getStatus();
+        if (newStatus.intValue() != oldStatus.intValue()) { // 状态是否改变
+            if(newStatus.intValue() == 1) {
+                sysUser.setStatus(newStatus); // 启用
+            } else {
+                sysUser.setStatus(0); // 停用
+            }
+            this.updateById(sysUser);
         }
-        this.updateById(sysUser);
     }
 }
 

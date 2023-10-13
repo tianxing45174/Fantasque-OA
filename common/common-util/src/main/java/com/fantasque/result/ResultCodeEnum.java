@@ -6,6 +6,7 @@ import lombok.Getter;
  * 错误码和错误信息定义
  * 10 表示通用 200表示成功
  * 20 用户错误
+ * 30 权限菜单错误
  * @author LaFantasque
  * @version 1.0
  */
@@ -15,9 +16,10 @@ public enum ResultCodeEnum {
     FAIL(10001,"系统未知异常"),//通用失败 系统未知异常
     DATA_ERROR(10004, "数据异常"),
     SERVICE_ERROR(10012, "服务异常"),
-    LOGIN_AUTH(20008, "未登陆"),//用户未登录
-    PERMISSION(20009, "没有权限"),//用户没有权限
-    PHONE_ERROR(20010, "电话号码格式错误")
+    LOGIN_AUTH(20004, "未登陆"),//用户未登录
+    PERMISSION(20005, "该用户没有权限"),//用户没有权限
+    PHONE_ERROR(20010, "电话号码格式错误"),
+    REMOVE_MENU_ERROR(30005,"该菜单含有子菜单，不能删除")
     ;
 
     private Integer code;

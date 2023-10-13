@@ -31,7 +31,7 @@ public class SysUserController {
 
     //用户条件分页查询
     @ApiOperation("用户条件分页查询")
-    @GetMapping("{page}/{limit}")
+    @GetMapping("/{page}/{limit}")
     public Result index(@PathVariable Long page,
                         @PathVariable Long limit,
                         SysUserQueryVo sysUserQueryVo) {
@@ -42,7 +42,7 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "获取用户信息")
-    @GetMapping("get/{id}")
+    @GetMapping("/get/{id}")
     public Result get(@PathVariable Long id) {
         System.out.println("获取用户id为" + id + " 的信息");
         SysUser user = service.getById(id);
@@ -50,7 +50,7 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "新增用户信息")
-    @PostMapping("save")
+    @PostMapping("/save")
     public Result save(@RequestBody SysUser user) {
         System.out.println("新增用户:" + user.getUsername() + " 的信息");
         if (user.getPhone().length() != 11) {
@@ -62,7 +62,7 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "更新用户信息")
-    @PutMapping("update")
+    @PutMapping("/update")
     public Result updateById(@RequestBody SysUser user) {
         System.out.println("更新用户:" + user.getUsername() + " 的信息");
         if (user.getPhone().length() != 11) {
@@ -74,7 +74,7 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "删除用户")
-    @DeleteMapping("remove/{id}")
+    @DeleteMapping("/remove/{id}")
     public Result remove(@PathVariable Long id) {
         System.out.println("删除用户id为:" + id + " 的信息");
         service.removeById(id);
@@ -100,6 +100,7 @@ public class SysUserController {
     @ApiOperation(value = "更新用户状态")
     @GetMapping("updateStatus/{id}/{status}")
     public Result updateStatus(@PathVariable Long id, @PathVariable Integer status) {
+        System.out.println("更新用户id:" + id + "的状态为[" + (status.equals(1)?"启用":"停用") + "]");
         service.updateStatus(id, status);
         return Result.ok();
     }

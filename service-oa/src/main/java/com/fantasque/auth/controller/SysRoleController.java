@@ -42,7 +42,7 @@ public class SysRoleController {
      * @return
      */
     @ApiOperation(value = "查询角色信息")
-    @GetMapping("get/{id}")
+    @GetMapping("/get/{id}")
     public Result get(@PathVariable Long id) {
         System.out.println("根据id查询角色信息");
         SysRole role = sysRoleService.getById(id);
@@ -94,7 +94,7 @@ public class SysRoleController {
      * @return
      */
     @ApiOperation(value = "根据id删除角色")
-    @DeleteMapping("remove/{id}")
+    @DeleteMapping("/remove/{id}")
     public Result remove(@PathVariable Long id) {
         System.out.println("删除id为[" + id + "]的角色");
         sysRoleService.removeById(id);
