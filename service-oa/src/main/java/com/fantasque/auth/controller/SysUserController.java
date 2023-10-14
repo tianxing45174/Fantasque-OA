@@ -6,7 +6,7 @@ import com.fantasque.auth.service.SysUserService;
 import com.fantasque.model.system.SysUser;
 import com.fantasque.result.Result;
 import com.fantasque.result.ResultCodeEnum;
-import com.fantasque.vo.system.AssginRoleVo;
+import com.fantasque.vo.system.AssignRoleVo;
 import com.fantasque.vo.system.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -91,9 +91,9 @@ public class SysUserController {
 
     @ApiOperation(value = "为用户分配角色")
     @PostMapping("/doAssign")
-    public Result doAssign(@RequestBody AssginRoleVo assginRoleVo) {
-        System.out.println("获取用户ID为:" + assginRoleVo.getUserId() + " 的用户分配" + assginRoleVo.getRoleIdList() + "角色");
-        sysRoleService.doAssign(assginRoleVo);
+    public Result doAssign(@RequestBody AssignRoleVo assignRoleVo) {
+        System.out.println("获取用户ID为:" + assignRoleVo.getUserId() + " 的用户分配" + assignRoleVo.getRoleIdList() + "角色");
+        sysRoleService.doAssign(assignRoleVo);
         return Result.ok();
     }
 

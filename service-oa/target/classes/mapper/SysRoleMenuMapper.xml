@@ -17,4 +17,11 @@
         id,role_id,menu_id,
         create_time,update_time,is_deleted
     </sql>
+
+    <insert id="insertRoleMenuList">
+        INSERT INTO sys_role_menu (role_id, menu_id) VALUES
+        <foreach collection="assignMenuList" item="menuId" separator="," close=";">
+            (#{roleId}, #{menuId})
+        </foreach>
+    </insert>
 </mapper>

@@ -2,6 +2,7 @@ package com.fantasque.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.fantasque.model.system.SysMenu;
+import com.fantasque.vo.system.AssignMenuVo;
 
 import java.util.List;
 
@@ -13,4 +14,8 @@ import java.util.List;
 public interface SysMenuService extends IService<SysMenu> {
 
     List<SysMenu> getMenu();
+
+    List<SysMenu> findMenuByRoleId(Long roleId);
+
+    void doAssign(AssignMenuVo assignMenuVo);
 }

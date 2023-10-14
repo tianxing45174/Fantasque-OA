@@ -3,6 +3,7 @@ package com.fantasque.auth.controller;
 import com.fantasque.auth.service.SysMenuService;
 import com.fantasque.model.system.SysMenu;
 import com.fantasque.result.Result;
+import com.fantasque.vo.system.AssignMenuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,21 @@ public class SysMenuController {
 
     @Autowired
     private SysMenuService service;
+
+    @ApiOperation(value = "根据角色Id获取菜单")
+    @GetMapping("toAssign/{roleId}")
+    public Result toAssign(@PathVariable Long roleId) {
+        System.out.println("获取id为[" + roleId + "]的角色的权限菜单");
+        List<SysMenu> list = service.findMenuByRoleId(roleId);
+        return Result.ok(list);
+    }
+
+    @ApiOperation(value = "给角色分配权限")
+    @PostMapping("/doAssign")
+    public Result doAssign(@RequestBody AssignMenuVo assignMenuVo) {
+        service.doAssign(assignMenuVo);
+        return Result.ok();
+    }
 
     @ApiOperation(value = "获取菜单")
     @GetMapping("/getMenu")

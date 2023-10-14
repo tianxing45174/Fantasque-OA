@@ -12,34 +12,37 @@
 //public class MenuHelper {
 //
 //    /**
-//     * 使用递归方法构建菜单
-//     * @param sysMenuList
-//     * @return
+//     * 使用递归构建菜单
+//     * @param sysMenuList 所有权限菜单
+//     * @return 树形结构 菜单
 //     */
-//    public static List<SysMenu> buildTree(List<SysMenu> sysMenuList) {
-//        List<SysMenu> trees = new ArrayList<>();
+//    private List<SysMenu> buildMenu(List<SysMenu> sysMenuList) {
+//        // 存储菜单数据
+//        List<SysMenu> menu = new ArrayList<>();
 //        for (SysMenu sysMenu : sysMenuList) {
 //            if (sysMenu.getParentId().longValue() == 0) {
-//                trees.add(findChildren(sysMenu,sysMenuList));
+//                menu.add(findChildren(sysMenu,sysMenuList));
 //            }
 //        }
-//        return trees;
+//        return menu;
 //    }
 //
 //    /**
 //     * 递归查找子节点
-//     * @param treeNodes
-//     * @return
+//     * @param sysMenu 父节点
+//     * @param sysMenuList 所有权限菜单
+//     * @return 已封装数据
 //     */
-//    public static SysMenu findChildren(SysMenu sysMenu, List<SysMenu> treeNodes) {
-//        sysMenu.setChildren(new ArrayList<SysMenu>());
+//    private SysMenu findChildren(SysMenu sysMenu, List<SysMenu> sysMenuList) {
 //
-//        for (SysMenu it : treeNodes) {
-//            if(sysMenu.getId().longValue() == it.getParentId().longValue()) {
-//                if (sysMenu.getChildren() == null) {
+//        for (SysMenu item : sysMenuList) {
+//            // 子节点ParentId == 父节点id 该父节点存在子节点
+//            if(item.getParentId().longValue() == sysMenu.getId().longValue()) {
+//                if (sysMenu.getChildren() == null) { //确保children不为null
 //                    sysMenu.setChildren(new ArrayList<>());
 //                }
-//                sysMenu.getChildren().add(findChildren(it,treeNodes));
+//                // 保存子节点
+//                sysMenu.getChildren().add(findChildren(item,sysMenuList));
 //            }
 //        }
 //        return sysMenu;

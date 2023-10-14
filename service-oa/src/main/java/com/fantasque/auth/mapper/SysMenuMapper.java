@@ -2,6 +2,7 @@ package com.fantasque.auth.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fantasque.model.system.SysMenu;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author tianx
@@ -9,6 +10,7 @@ import com.fantasque.model.system.SysMenu;
 * @createDate 2023-10-12 02:47:58
 * @Entity com/fantasque/auth.domain.SysMenu
 */
+@Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
 }

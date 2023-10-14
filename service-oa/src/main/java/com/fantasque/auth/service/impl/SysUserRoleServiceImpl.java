@@ -6,6 +6,8 @@ import com.fantasque.auth.service.SysUserRoleService;
 import com.fantasque.model.system.SysUserRole;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
 * @author tianx
 * @description 针对表【sys_user_role(用户角色)】的数据库操作Service实现
@@ -15,6 +17,15 @@ import org.springframework.stereotype.Service;
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole>
     implements SysUserRoleService {
 
+    /**
+     * 根据用户ID分配多个角色
+     * @param userId
+     * @param assignRoleList
+     */
+    @Override
+    public void saveRoleList(Long userId, List<Long> assignRoleList) {
+        this.baseMapper.insertRoleList(userId, assignRoleList);
+    }
 }
 
 

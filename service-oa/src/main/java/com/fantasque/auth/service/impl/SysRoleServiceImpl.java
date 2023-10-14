@@ -6,11 +6,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fantasque.auth.mapper.SysRoleMapper;
-import com.fantasque.auth.mapper.SysUserRoleMapper;
 import com.fantasque.auth.service.SysRoleService;
+import com.fantasque.auth.service.SysUserRoleService;
 import com.fantasque.model.system.SysRole;
 import com.fantasque.model.system.SysUserRole;
-import com.fantasque.vo.system.AssginRoleVo;
+import com.fantasque.vo.system.AssignRoleVo;
 import com.fantasque.vo.system.SysRoleQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
     implements SysRoleService {
 
     @Autowired
-    private SysUserRoleMapper sysUserRoleMapper;
+    private SysUserRoleService sysUserRoleService;
 
     @Override
     public IPage pageQueryRole(Long page, Long limit, SysRoleQueryVo sysRoleQueryVo) {
@@ -67,57 +67,57 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
         roleMap.put("allRolesList",allRolesList);
 
         // 查询userId拥有的角色
-        List<SysUserRole> userRoleList = sysUserRoleMapper.selectList(new QueryWrapper<SysUserRole>().eq("user_id", userId));
+        List<SysUserRole> userRoleList = sysUserRoleService.list(new QueryWrapper<SysUserRole>().eq("user_id", userId));
         List<Long> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
 
         // 保存拥有的角色信息
-        List<SysRole> assginRoleList = new ArrayList<>();
+        List<SysRole> assignRoleList = new ArrayList<>();
         for (SysRole sysRole : allRolesList) {
             if (roleIdList.contains(sysRole.getId())) {
-                assginRoleList.add(sysRole);
+                assignRoleList.add(sysRole);
             }
         }
-        roleMap.put("assginRoleList",assginRoleList);
+        roleMap.put("assignRoleList",assignRoleList);
 
         return roleMap;
     }
 
     /**
      * 分配角色
-     * @param assginRoleVo
+     * @param assignRoleVo
      */
     @Transactional
     @Override
-    public void doAssign(AssginRoleVo assginRoleVo) {
+    public void doAssign(AssignRoleVo assignRoleVo) {
         // 传入的角色idList
-        List<Long> assginRoleIdList = assginRoleVo.getRoleIdList();
+        List<Long> assignRoleIdList = assignRoleVo.getRoleIdList();
         // 查询userId当前拥有的角色
-        List<SysUserRole> userRoleList = sysUserRoleMapper.selectList(new QueryWrapper<SysUserRole>().eq("user_id", assginRoleVo.getUserId()));
+        List<SysUserRole> userRoleList = sysUserRoleService.list(new QueryWrapper<SysUserRole>().eq("user_id", assignRoleVo.getUserId()));
         List<Long> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
         // 新增角色idList
-        List<Long> assginRoleList = assginRoleIdList.stream().filter(i -> !roleIdList.contains(i)).collect(Collectors.toList());
+        List<Long> assignRoleList = assignRoleIdList.stream().filter(i -> !roleIdList.contains(i)).collect(Collectors.toList());
         // 撤销角色idList
-        List<Long> unassginRoleList = roleIdList.stream().filter(i -> !assginRoleIdList.contains(i)).collect(Collectors.toList());
+        List<Long> unassignRoleList = roleIdList.stream().filter(i -> !assignRoleIdList.contains(i)).collect(Collectors.toList());
 
-        System.out.println("新增角色id:" + assginRoleList);
-        System.out.println("撤销角色id:" + unassginRoleList);
+        System.out.println("新增角色id:" + assignRoleList);
+        System.out.println("撤销角色id:" + unassignRoleList);
         // 判断撤销角色是否为空
-        if (!unassginRoleList.isEmpty()) {
-            List<Long> unassginUserRoleIdList = new ArrayList<>();
+        if (!unassignRoleList.isEmpty()) {
+            List<Long> unassignUserRoleIdList = new ArrayList<>();
             for (SysUserRole userRole : userRoleList) {
                 // 从 当前拥有的角色中 获取 要撤销的 用户角色表id
-                if (unassginRoleList.contains(userRole.getRoleId())) {
-                    unassginUserRoleIdList.add(userRole.getId());
+                if (unassignRoleList.contains(userRole.getRoleId())) {
+                    unassignUserRoleIdList.add(userRole.getId());
                 }
             }
-            System.out.println("删除的用户角色表id:" + unassginUserRoleIdList);
+            System.out.println("删除的用户角色表id:" + unassignUserRoleIdList);
             // 撤销角色
-            sysUserRoleMapper.deleteBatchIds(unassginUserRoleIdList);
+            sysUserRoleService.removeByIds(unassignUserRoleIdList);
         }
 
         // 新增角色
-        if (!assginRoleList.isEmpty()) {
-            sysUserRoleMapper.insertRoleList(assginRoleVo.getUserId(),assginRoleList);
+        if (!assignRoleList.isEmpty()) {
+            sysUserRoleService.saveRoleList(assignRoleVo.getUserId(),assignRoleList);
         }
 
     }
