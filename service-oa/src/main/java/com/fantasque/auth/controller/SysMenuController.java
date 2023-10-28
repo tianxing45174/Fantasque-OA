@@ -2,7 +2,7 @@ package com.fantasque.auth.controller;
 
 import com.fantasque.auth.service.SysMenuService;
 import com.fantasque.model.system.SysMenu;
-import com.fantasque.result.Result;
+import com.fantasque.common.result.Result;
 import com.fantasque.vo.system.AssignMenuVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

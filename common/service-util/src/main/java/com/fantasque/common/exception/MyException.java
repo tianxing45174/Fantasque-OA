@@ -1,6 +1,6 @@
 package com.fantasque.common.exception;
 
-import com.fantasque.result.ResultCodeEnum;
+import com.fantasque.common.result.ResultCodeEnum;
 import lombok.Data;
 import lombok.ToString;
 

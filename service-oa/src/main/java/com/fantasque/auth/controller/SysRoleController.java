@@ -3,7 +3,7 @@ package com.fantasque.auth.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fantasque.auth.service.SysRoleService;
 import com.fantasque.model.system.SysRole;
-import com.fantasque.result.Result;
+import com.fantasque.common.result.Result;
 import com.fantasque.vo.system.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

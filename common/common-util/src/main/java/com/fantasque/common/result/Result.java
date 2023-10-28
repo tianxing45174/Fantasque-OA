@@ -1,4 +1,4 @@
-package com.fantasque.result;
+package com.fantasque.common.result;
 
 import lombok.Data;
 
@@ -54,7 +54,7 @@ public class Result<T> {
         return Result.fail(null);
     }
     public static<T> Result<T> fail(T data){
-        Result<T> result = build(data);
+//        Result<T> result = build(data);
         return build(data, ResultCodeEnum.FAIL);
     }
 

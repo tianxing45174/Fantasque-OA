@@ -3,6 +3,9 @@ package com.fantasque.auth.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.fantasque.model.system.SysMenu;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author tianx
@@ -13,6 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
+    List<SysMenu> findListByUserId(@Param("userId") Long userId);
 }
 
 

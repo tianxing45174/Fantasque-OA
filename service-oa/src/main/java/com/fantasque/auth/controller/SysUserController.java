@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fantasque.auth.service.SysRoleService;
 import com.fantasque.auth.service.SysUserService;
 import com.fantasque.model.system.SysUser;
-import com.fantasque.result.Result;
-import com.fantasque.result.ResultCodeEnum;
+import com.fantasque.common.result.Result;
+import com.fantasque.common.result.ResultCodeEnum;
 import com.fantasque.vo.system.AssignRoleVo;
 import com.fantasque.vo.system.SysUserQueryVo;
 import io.swagger.annotations.Api;
@@ -37,7 +37,7 @@ public class SysUserController {
                         SysUserQueryVo sysUserQueryVo) {
         System.out.println("分页查询用户,当前页数: "+ page +"查询数量:" + limit + "，查询条件: " + sysUserQueryVo.toString());
         //调用mp的方法实现条件分页查询
-        IPage<SysUser> pageModel = service.pageQueryUser(page, limit, sysUserQueryVo);
+        IPage pageModel = service.pageQueryUser(page, limit, sysUserQueryVo);
         return Result.ok(pageModel);
     }
 
@@ -53,11 +53,7 @@ public class SysUserController {
     @PostMapping("/save")
     public Result save(@RequestBody SysUser user) {
         System.out.println("新增用户:" + user.getUsername() + " 的信息");
-        if (user.getPhone().length() != 11) {
-            System.out.println("电话号码格式错误");
-            return Result.fail().resultCodeEnum(ResultCodeEnum.PHONE_ERROR);
-        }
-        service.save(user);
+        service.saveUser(user);
         return Result.ok();
     }
 
@@ -65,7 +61,7 @@ public class SysUserController {
     @PutMapping("/update")
     public Result updateById(@RequestBody SysUser user) {
         System.out.println("更新用户:" + user.getUsername() + " 的信息");
-        if (user.getPhone().length() != 11) {
+        if (11 != user.getPhone().length()) {
             System.out.println("电话号码格式错误");
             return Result.fail().resultCodeEnum(ResultCodeEnum.PHONE_ERROR);
         }

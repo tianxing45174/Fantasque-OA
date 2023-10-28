@@ -6,7 +6,7 @@
  * 版权所有，侵权必究！
  */
 
-package com.fantasque.result;
+package com.fantasque.common.result;
 
 import org.springframework.http.HttpStatus;
 

@@ -68,7 +68,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
 
         // 查询userId拥有的角色
         List<SysUserRole> userRoleList = sysUserRoleService.list(new QueryWrapper<SysUserRole>().eq("user_id", userId));
-        List<Long> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        List<Long> roleIdList = userRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
 
         // 保存拥有的角色信息
         List<SysRole> assignRoleList = new ArrayList<>();
@@ -93,7 +93,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
         List<Long> assignRoleIdList = assignRoleVo.getRoleIdList();
         // 查询userId当前拥有的角色
         List<SysUserRole> userRoleList = sysUserRoleService.list(new QueryWrapper<SysUserRole>().eq("user_id", assignRoleVo.getUserId()));
-        List<Long> roleIdList = userRoleList.stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        List<Long> roleIdList = userRoleList.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
         // 新增角色idList
         List<Long> assignRoleList = assignRoleIdList.stream().filter(i -> !roleIdList.contains(i)).collect(Collectors.toList());
         // 撤销角色idList

@@ -1,6 +1,6 @@
 package com.fantasque.common.exception.handler;
 
-import com.fantasque.result.Result;
+import com.fantasque.common.result.Result;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
