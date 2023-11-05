@@ -31,6 +31,7 @@
         <jwt.version>0.9.1</jwt.version>
         <fastjson.version>2.0.21</fastjson.version>
         <spring.security.version>5.3.5.RELEASE</spring.security.version>
+        <activiti.version>7.1.0.M6</activiti.version>
 
     </properties>
 
@@ -67,7 +68,18 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-            <!-- 引入spring-security -->
+            <!--引入activiti的springboot启动器 -->
+            <dependency>
+                <groupId>org.activiti</groupId>
+                <artifactId>activiti-spring-boot-starter</artifactId>
+                <version>${activiti.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>mybatis</artifactId>
+                        <groupId>org.mybatis</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

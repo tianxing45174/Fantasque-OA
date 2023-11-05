@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.fantasque.model.system.SysUser;
 import com.fantasque.vo.system.SysUserQueryVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,4 +24,6 @@ public interface SysUserService extends IService<SysUser> {
     void saveUser(SysUser user);
 
     Map<String, Object> getUserInfo(String username);
+
+    List<String> getUsernameByRoleId(Long roleId);
 }

@@ -11,6 +11,7 @@ import com.fantasque.vo.system.SysUserQueryVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -30,6 +31,7 @@ public class SysUserController {
     private SysRoleService sysRoleService;
 
     //用户条件分页查询
+    @PreAuthorize("hasAuthority('bnt.sysUser.list')")
     @ApiOperation("用户条件分页查询")
     @GetMapping("/{page}/{limit}")
     public Result index(@PathVariable Long page,
@@ -41,6 +43,7 @@ public class SysUserController {
         return Result.ok(pageModel);
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.list')")
     @ApiOperation(value = "获取用户信息")
     @GetMapping("/get/{id}")
     public Result get(@PathVariable Long id) {
@@ -49,6 +52,7 @@ public class SysUserController {
         return Result.ok(user);
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.add')")
     @ApiOperation(value = "新增用户信息")
     @PostMapping("/save")
     public Result save(@RequestBody SysUser user) {
@@ -57,6 +61,7 @@ public class SysUserController {
         return Result.ok();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.update')")
     @ApiOperation(value = "更新用户信息")
     @PutMapping("/update")
     public Result updateById(@RequestBody SysUser user) {
@@ -69,6 +74,7 @@ public class SysUserController {
         return Result.ok();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.remove')")
     @ApiOperation(value = "删除用户")
     @DeleteMapping("/remove/{id}")
     public Result remove(@PathVariable Long id) {
@@ -77,6 +83,7 @@ public class SysUserController {
         return Result.ok();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.assignRole')")
     @ApiOperation(value = "获取用户角色数据")
     @GetMapping("/toAssign/{userId}")
     public Result toAssign(@PathVariable Long userId) {
@@ -85,6 +92,7 @@ public class SysUserController {
         return Result.ok(roleMap);
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.assignRole')")
     @ApiOperation(value = "为用户分配角色")
     @PostMapping("/doAssign")
     public Result doAssign(@RequestBody AssignRoleVo assignRoleVo) {
@@ -93,6 +101,7 @@ public class SysUserController {
         return Result.ok();
     }
 
+    @PreAuthorize("hasAuthority('bnt.sysUser.update')")
     @ApiOperation(value = "更新用户状态")
     @GetMapping("updateStatus/{id}/{status}")
     public Result updateStatus(@PathVariable Long id, @PathVariable Integer status) {

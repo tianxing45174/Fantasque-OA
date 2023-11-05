@@ -19,7 +19,8 @@ public enum ResultCodeEnum {
     DATA_ERROR(10004, "数据异常"),
     SERVICE_ERROR(10012, "服务异常"),
     LOGIN_ERROR(20001, "未知登录错误"),
-    LOGIN_ADMIN_ERROR(20002, "用户未登陆"),//用户未登录
+    LOGIN_NULL_ERROR(20002, "用户未登陆"),//用户未登录
+    LOGIN_TIME_OUT_ERROR(20003, "登陆超时"),//用户未登录
     LOGIN_USER_ERROR(20102, "用户不存在"),
     LOGIN_PASSWORD_ERROR(20103, "用户密码错误"),
     LOGIN_STATUS_ERROR(20104, "用户已被禁用"),

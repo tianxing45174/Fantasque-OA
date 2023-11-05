@@ -33,6 +33,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--引入activiti的springboot启动器 -->
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
     <properties>

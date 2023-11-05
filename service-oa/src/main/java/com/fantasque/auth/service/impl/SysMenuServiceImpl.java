@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fantasque.auth.mapper.SysMenuMapper;
 import com.fantasque.auth.service.SysMenuService;
 import com.fantasque.auth.service.SysRoleMenuService;
+import com.fantasque.auth.service.SysUserService;
 import com.fantasque.common.exception.MyException;
 import com.fantasque.common.result.ResultCodeEnum;
 import com.fantasque.model.system.SysMenu;
@@ -14,6 +15,7 @@ import com.fantasque.vo.system.AssignMenuVo;
 import com.fantasque.vo.system.MetaVo;
 import com.fantasque.vo.system.RouterVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -34,10 +36,20 @@ import java.util.stream.Collectors;
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
     implements SysMenuService {
 
-    private final int Admin = 1;
+    private final int AdminId = 1;
+    // 菜单状态
+    private final int Enable = 1;
+    // 菜单类型
+    private final int Directory = 0;
+    private final int Menu = 1;
+    private final int Button = 2;
 
     @Autowired
     private SysRoleMenuService sysRoleMenuService;
+    @Autowired
+    private SysUserService sysUserService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public List<SysMenu> getMenu() {
@@ -55,7 +67,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
      */
     @Override
     public List<SysMenu> findMenuByRoleId(Long roleId) {
-        List<SysMenu> allMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, 1));
+        List<SysMenu> allMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, Enable));
         List<SysRoleMenu> roleMenuList = sysRoleMenuService.list(new QueryWrapper<SysRoleMenu>().eq("role_id", roleId));
         List<Long> menuIdList = roleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
         System.out.println("该用户拥有的权限菜单id为" + menuIdList);
@@ -94,6 +106,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
             // 新分配权限菜单
             sysRoleMenuService.saveRoleMenuList(assignMenuVo.getRoleId(), assignMenuList);
         }
+        if (!unassignRoleMenuIdList.isEmpty() || !assignMenuList.isEmpty()) {
+            List<String> usernameList = sysUserService.getUsernameByRoleId(assignMenuVo.getRoleId());
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+            System.out.println("拥有该角色的用户" + usernameList);
+            System.out.println("+++++++++++++++++++++++++++++++++++++++++");
+            redisTemplate.delete(usernameList);
+        }
     }
 
     /**
@@ -104,9 +123,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
     @Override
     public List<RouterVo> findUserMenuListByUserId(Long userId) {
         List<SysMenu> sysMenuList;
-        if (Admin == userId) {
+        if (AdminId == userId) {
             // 超级管理员 获取所有权限
-            sysMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, 1).orderByAsc(SysMenu::getSortValue));
+            sysMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, Enable).orderByAsc(SysMenu::getSortValue));
         } else {
             sysMenuList = this.baseMapper.findListByUserId(userId);
         }
@@ -124,12 +143,12 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
     public List<String> findUserPermsListByUserId(Long userId) {
         //超级管理员admin账号id为：1
         List<SysMenu> sysMenuList;
-        if (Admin == userId) {
-            sysMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, 1));
+        if (AdminId == userId) {
+            sysMenuList = this.list(new LambdaQueryWrapper<SysMenu>().eq(SysMenu::getStatus, Enable));
         } else {
             sysMenuList = this.baseMapper.findListByUserId(userId);
         }
-        List<String> permsList = sysMenuList.stream().filter(item -> item.getType() == 2).map(SysMenu::getPerms).collect(Collectors.toList());
+        List<String> permsList = sysMenuList.stream().filter(item -> Button == item.getType()).map(SysMenu::getPerms).collect(Collectors.toList());
         return permsList;
     }
 
@@ -201,7 +220,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
             router.setMeta(new MetaVo(menu.getName(), menu.getIcon()));
             List<SysMenu> children = menu.getChildren();
             //如果当前是菜单，需将按钮对应的路由加载出来，如：“角色授权”按钮对应的路由在“系统管理”下面
-            if(1 == menu.getType()) {
+            if(Menu == menu.getType()) {
                 List<SysMenu> hiddenMenuList = children.stream().filter(item -> !StringUtils.isEmpty(item.getComponent())).collect(Collectors.toList());
 //                if (CollectionUtils.isEmpty(hiddenMenuList)) {
 //                    continue;

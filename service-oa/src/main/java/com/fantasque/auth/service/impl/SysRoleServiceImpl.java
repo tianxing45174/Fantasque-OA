@@ -8,11 +8,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fantasque.auth.mapper.SysRoleMapper;
 import com.fantasque.auth.service.SysRoleService;
 import com.fantasque.auth.service.SysUserRoleService;
+import com.fantasque.auth.service.SysUserService;
 import com.fantasque.model.system.SysRole;
+import com.fantasque.model.system.SysUser;
 import com.fantasque.model.system.SysUserRole;
 import com.fantasque.vo.system.AssignRoleVo;
 import com.fantasque.vo.system.SysRoleQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -34,6 +37,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
 
     @Autowired
     private SysUserRoleService sysUserRoleService;
+    @Autowired
+    private SysUserService sysUserService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
     public IPage pageQueryRole(Long page, Long limit, SysRoleQueryVo sysRoleQueryVo) {
@@ -119,7 +127,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
         if (!assignRoleList.isEmpty()) {
             sysUserRoleService.saveRoleList(assignRoleVo.getUserId(),assignRoleList);
         }
-
+        // 删除修改用户 登录状态
+        if (!unassignRoleList.isEmpty() || !assignRoleList.isEmpty()) {
+            SysUser user = sysUserService.getById(assignRoleVo.getUserId());
+            redisTemplate.delete(user.getUsername());
+        }
     }
 }
 

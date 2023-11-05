@@ -136,6 +136,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
         result.put("roles",  new HashSet<>());
         return result;
     }
+
+    @Override
+    public List<String> getUsernameByRoleId(Long roleId) {
+        List<String> usernameList = this.baseMapper.getUsernameByRoleId(roleId);
+        return usernameList;
+    }
 }
 
 

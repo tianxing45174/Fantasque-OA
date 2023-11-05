@@ -16,11 +16,11 @@
 //     * @param sysMenuList 所有权限菜单
 //     * @return 树形结构 菜单
 //     */
-//    private List<SysMenu> buildMenu(List<SysMenu> sysMenuList) {
+//    private List<SysMenu> buildMenuTree(List<SysMenu> sysMenuList) {
 //        // 存储菜单数据
 //        List<SysMenu> menu = new ArrayList<>();
 //        for (SysMenu sysMenu : sysMenuList) {
-//            if (sysMenu.getParentId().longValue() == 0) {
+//            if (sysMenu.getParentId() == 0) {
 //                menu.add(findChildren(sysMenu,sysMenuList));
 //            }
 //        }
